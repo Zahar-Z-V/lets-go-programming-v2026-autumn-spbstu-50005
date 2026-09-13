@@ -18,7 +18,11 @@ func main() {
 		return
 	}
 
-	fmt.Scan(&sym)
+	_, err = fmt.Scan(&sym)
+	if err != nil {
+		fmt.Println("Invalid operation")
+		return
+	}
 
 	switch sym {
 	case "+":
