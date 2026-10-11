@@ -3,16 +3,16 @@ package main
 import "fmt"
 
 func processQueries(countK int) {
+	var sign string
+	var degree int
+
 	minimum := 15
 	maximum := 30
 
 	for range countK {
-		var sign string
-		var degree int
-
 		_, err := fmt.Scan(&sign, &degree)
 		if err != nil {
-			return
+			continue
 		}
 
 		if sign == "-" {
@@ -36,7 +36,8 @@ func processQueries(countK int) {
 }
 
 func main() {
-	var countN, countK int
+	var countN int
+	var countK int
 
 	_, err := fmt.Scan(&countN)
 	if err != nil || countN <= 0 {
