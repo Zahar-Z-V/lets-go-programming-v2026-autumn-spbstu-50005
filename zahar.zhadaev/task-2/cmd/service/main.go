@@ -17,7 +17,7 @@ func main() {
 
 		minimum := 15
 		maximum := 30
-
+		
 		for range K {
 			var sign string
 			var degree int
