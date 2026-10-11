@@ -8,7 +8,6 @@ func main() {
 	if err != nil || N <= 0 {
 		return
 	}
-	
 	for range N {
 		_, err := fmt.Scan(&K)
 		if err != nil || K <= 0 {
