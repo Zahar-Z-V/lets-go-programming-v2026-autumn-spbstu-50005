@@ -2,67 +2,43 @@ package main
 
 import "fmt"
 
-const (
-	minTemp        = 15
-	maxTemp        = 30
-	errorCode      = -1
-	lessOrEqual    = "<="
-	greaterOrEqual = ">="
-)
-
-type bounds struct {
-	left, right int
-}
-
-func (b *bounds) change(sign string, temp int) {
-	switch sign {
-	case lessOrEqual:
-		b.right = min(b.right, temp)
-	case greaterOrEqual:
-		b.left = max(b.left, temp)
-	}
-}
-
-func (b *bounds) check() bool {
-	return b.left <= b.right
-}
-
 func main() {
-	var departments, workers int
-
-	if _, err := fmt.Scan(&departments); err != nil {
-		fmt.Println("Error: invalid departments count:", err)
-
+	var N, K int
+	_, err := fmt.Scan(&N)
+	if err != nil || N <= 0 {
 		return
 	}
 
-	for range departments {
-		temperatureBounds := bounds{minTemp, maxTemp}
-
-		if _, err := fmt.Scan(&workers); err != nil {
-			fmt.Println("Error: invalid workers count:", err)
-
-			return
+	for range N {
+		_, err := fmt.Scan(&K)
+		if err != nil || K <= 0 {
+			continue
 		}
 
-		for range workers {
-			var (
-				sign string
-				temp int
-			)
+		minimum := 15
+		maximum := 30
 
-			if _, err := fmt.Scan(&sign, &temp); err != nil {
-				fmt.Println("Error: invalid state:", err)
-
+		for range K {
+			var sign string
+			var degree int
+			_, err := fmt.Scan(&sign, &degree)
+			if err != nil {
 				return
 			}
-
-			temperatureBounds.change(sign, temp)
-
-			if temperatureBounds.check() {
-				fmt.Println(temperatureBounds.left)
+			if sign == ">=" {
+				if degree > minimum {
+					minimum = degree
+				}
+			}
+			if sign == "<=" {
+				if degree < maximum {
+					maximum = degree
+				}
+			}
+			if minimum <= maximum {
+				fmt.Println(minimum)
 			} else {
-				fmt.Println(errorCode)
+				fmt.Println(-1)
 			}
 		}
 	}
