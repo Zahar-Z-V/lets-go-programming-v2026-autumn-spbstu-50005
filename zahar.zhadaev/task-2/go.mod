@@ -1,2 +1,3 @@
-module github.com/Zahar-Z-V/task-2
+module lets-go-programming
+
 go 1.22
