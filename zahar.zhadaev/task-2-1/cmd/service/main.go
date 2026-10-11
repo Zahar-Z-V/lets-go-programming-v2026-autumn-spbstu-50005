@@ -2,54 +2,54 @@ package main
 
 import "fmt"
 
-func processQueries(countK int) {
-	var sign string
-	var degree int
-
-	minimum := 15
-	maximum := 30
-
-	for range countK {
-		_, err := fmt.Scan(&sign, &degree)
-		if err != nil {
-			continue
-		}
-
-		if sign == "-" {
-			if degree > minimum {
-				minimum = degree
-			}
-		}
-
-		if sign == "+" {
-			if degree < maximum {
-				maximum = degree
-			}
-		}
-	}
-
-	if minimum <= maximum {
-		fmt.Println(minimum)
-	} else {
-		fmt.Println(-1)
-	}
-}
-
 func main() {
-	var countN int
-	var countK int
 
-	_, err := fmt.Scan(&countN)
-	if err != nil || countN <= 0 {
+	var totalTestCases int
+
+	_, err := fmt.Scan(&totalTestCases)
+	if err != nil || totalTestCases <= 0 {
 		return
 	}
 
-	for range countN {
-		_, err = fmt.Scan(&countK)
-		if err != nil || countK <= 0 {
+	for range totalTestCases {
+		
+		var operationsCount int
+
+		_, err = fmt.Scan(&operationsCount)
+		if err != nil || operationsCount <= 0 {
 			continue
 		}
 
-		processQueries(countK)
+		minimum := 15
+		maximum := 30
+
+		for range operationsCount {
+			
+			var sign string
+			var degree int
+
+			_, err := fmt.Scan(&sign, &degree)
+			if err != nil {
+				continue
+			}
+
+			if sign == "-" {
+				if degree > minimum {
+					minimum = degree
+				}
+			}
+
+			if sign == "+" {
+				if degree < maximum {
+					maximum = degree
+				}
+			}
+		}
+
+		if minimum <= maximum {
+			fmt.Println(minimum)
+		} else {
+			fmt.Println(-1)
+		}
 	}
 }
