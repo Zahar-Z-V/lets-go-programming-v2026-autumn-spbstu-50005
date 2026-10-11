@@ -3,50 +3,51 @@ package main
 import "fmt"
 
 func main() {
-	var N, K int
-	
-	_, err := fmt.Scan(&N)
-	if err != nil || N <= 0 {
+	var testsCount int
+
+	_, err := fmt.Scan(&testsCount)
+	if err != nil || testsCount <= 0 {
 		return
 	}
 
+	for range testsCount {
+		processTest()
+	}
+}
 
-	for range N {
+func processTest() {
+	var limitsCount int
 
-		_, err := fmt.Scan(&K)
-		if err != nil || K <= 0 {
-			continue
+	_, err := fmt.Scan(&limitsCount)
+	if err != nil || limitsCount <= 0 {
+		return
+	}
+
+	minimum := 15
+	maximum := 30
+
+	for range limitsCount {
+		var sign string
+
+		var degree int
+
+		_, err := fmt.Scan(&sign, &degree)
+		if err != nil {
+			return
 		}
 
-		minimum := 15
-		maximum := 30
+		if sign == ">=" && degree > minimum {
+			minimum = degree
+		}
 
-		for range K {
-			var sign string
-			var degree int
+		if sign == "<=" && degree < maximum {
+			maximum = degree
+		}
 
-			_, err := fmt.Scan(&sign, &degree)
-			if err != nil {
-				return
-			}
-
-			if sign == ">=" {
-				if degree > minimum {
-					minimum = degree
-				}
-			}
-
-			if sign == "<=" {
-				if degree < maximum {
-					maximum = degree
-				}
-			}
-
-			if minimum <= maximum {
-				fmt.Println(minimum)
-			} else {
-				fmt.Println(-1)
-			}
+		if minimum <= maximum {
+			fmt.Println(minimum)
+		} else {
+			fmt.Println(-1)
 		}
 	}
 }
