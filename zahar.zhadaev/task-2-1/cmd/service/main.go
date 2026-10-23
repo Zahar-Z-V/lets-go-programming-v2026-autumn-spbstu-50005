@@ -25,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to read tests count: %v", err)
 	}
+
 	if testsCount <= 0 {
 		log.Fatalf("invalid tests count: %d", testsCount)
 	}
@@ -41,6 +42,7 @@ func processTest() {
 	if err != nil {
 		log.Fatalf("failed to read limits count: %v", err)
 	}
+
 	if limitsCount <= 0 {
 		log.Fatalf("invalid limits count: %d", limitsCount)
 	}
@@ -68,7 +70,7 @@ func readConstraint() (string, int, error) {
 
 	_, err := fmt.Scan(&sign, &degree)
 	if err != nil {
-		return "", 0, err
+		return "", 0, fmt.Errorf("scan constraint: %w", err)
 	}
 
 	return sign, degree, nil
