@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 const (
 	defaultMin               = 15
@@ -19,8 +22,11 @@ func main() {
 	var testsCount int
 
 	_, err := fmt.Scan(&testsCount)
-	if err != nil || testsCount <= 0 {
-		return
+	if err != nil {
+		log.Fatalf("failed to read tests count: %v", err)
+	}
+	if testsCount <= 0 {
+		log.Fatalf("invalid tests count: %d", testsCount)
 	}
 
 	for range testsCount {
@@ -32,8 +38,11 @@ func processTest() {
 	var limitsCount int
 
 	_, err := fmt.Scan(&limitsCount)
-	if err != nil || limitsCount <= 0 {
-		return
+	if err != nil {
+		log.Fatalf("failed to read limits count: %v", err)
+	}
+	if limitsCount <= 0 {
+		log.Fatalf("invalid limits count: %d", limitsCount)
 	}
 
 	temp := TemperatureRange{
@@ -42,16 +51,16 @@ func processTest() {
 	}
 
 	for range limitsCount {
-		sign, degree, ok := readConstraint()
-		if !ok {
-			return
+		sign, degree, err := readConstraint()
+		if err != nil {
+			log.Fatalf("failed to read constraint: %v", err)
 		}
 
 		applyConstraint(&temp, sign, degree)
 	}
 }
 
-func readConstraint() (string, int, bool) {
+func readConstraint() (string, int, error) {
 	var (
 		sign   string
 		degree int
@@ -59,10 +68,10 @@ func readConstraint() (string, int, bool) {
 
 	_, err := fmt.Scan(&sign, &degree)
 	if err != nil {
-		return "", 0, false
+		return "", 0, err
 	}
 
-	return sign, degree, true
+	return sign, degree, nil
 }
 
 func applyConstraint(temp *TemperatureRange, sign string, degree int) {
