@@ -42,32 +42,45 @@ func processTest() {
 	}
 
 	for range limitsCount {
-		var (
-			sign   string
-			degree int
-		)
-
-		_, err := fmt.Scan(&sign, &degree)
-		if err != nil {
+		sign, degree, ok := readConstraint()
+		if !ok {
 			return
 		}
 
-		if sign != signGreaterOrEqual && sign != signLessOrEqual {
-			continue
-		}
+		applyConstraint(&temp, sign, degree)
+	}
+}
 
-		if sign == signGreaterOrEqual && degree > temp.min {
-			temp.min = degree
-		}
+func readConstraint() (string, int, bool) {
+	var (
+		sign   string
+		degree int
+	)
 
-		if sign == signLessOrEqual && degree < temp.max {
-			temp.max = degree
-		}
+	_, err := fmt.Scan(&sign, &degree)
+	if err != nil {
+		return "", 0, false
+	}
 
-		if temp.min <= temp.max {
-			fmt.Println(temp.min)
-		} else {
-			fmt.Println(invalidTemperatureResult)
-		}
+	return sign, degree, true
+}
+
+func applyConstraint(temp *TemperatureRange, sign string, degree int) {
+	if sign != signGreaterOrEqual && sign != signLessOrEqual {
+		return
+	}
+
+	if sign == signGreaterOrEqual && degree > temp.min {
+		temp.min = degree
+	}
+
+	if sign == signLessOrEqual && degree < temp.max {
+		temp.max = degree
+	}
+
+	if temp.min <= temp.max {
+		fmt.Println(temp.min)
+	} else {
+		fmt.Println(invalidTemperatureResult)
 	}
 }
